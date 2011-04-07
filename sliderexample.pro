@@ -18,6 +18,9 @@ symbian:TARGET.CAPABILITY += NetworkServices
 SOURCES += main.cpp mainwindow.cpp
 HEADERS += mainwindow.h
 FORMS += mainwindow.ui
+CONFIG += mobility
+MOBILITY += sensors
+INCLUDEPATH += /usr/include/QtSensors/
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
