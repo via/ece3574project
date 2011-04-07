@@ -16,6 +16,10 @@ namespace Ui {
     class MainWindow;
 }
 
+enum Axis {
+        X, Y, Z
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -31,6 +35,9 @@ public:
 
     void setOrientation(ScreenOrientation orientation);
     void showExpanded();
+    void commitSettings(const QString &Raxis,
+                        const QString &Gaxis,
+                        const QString &Baxis);
 
 private slots:
     void on_verticalSlider_2_valueChanged(int value);
@@ -39,11 +46,17 @@ private slots:
 
     void on_verticalSlider_3_valueChanged(int value);
 
+    void settingsWindowSlot();
+
 private:
     Ui::MainWindow *ui;
         QString R;
         QString G;
         QString B;
+
+        Axis Raxis;
+        Axis Gaxis;
+        Axis Baxis;
 };
 
 #endif // MAINWINDOW_H
