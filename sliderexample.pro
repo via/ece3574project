@@ -12,16 +12,13 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # If your application uses the Qt Mobility libraries, uncomment
 # the following lines and add the respective components to the 
 # MOBILITY variable. 
+
+SOURCES += main.cpp mainwindow.cpp settingsdialog.cpp
+HEADERS += mainwindow.h settingsdialog.h
+FORMS += mainwindow.ui settingsdialog.ui
 CONFIG += mobility
 MOBILITY += sensors
 INCLUDEPATH += /usr/include/QtSensors/
-
-SOURCES += main.cpp mainwindow.cpp \ 
-    settingsdialog.cpp
-HEADERS += mainwindow.h \ 
-    settingsdialog.h
-FORMS += mainwindow.ui \
-    settingsdialog.ui
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)

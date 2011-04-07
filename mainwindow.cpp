@@ -9,8 +9,10 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "settingsdialog.h"
 
-#include <QtCore/QCoreApplication>
+#include <QtCore>
+#include <QtGui>
 #include <QAccelerometer>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -20,6 +22,12 @@ MainWindow::MainWindow(QWidget *parent)
     R = "00";
     G = "00";
     B = "00";
+    QAction *settingsAction = new QAction("Settings", this);
+        connect(settingsAction, SIGNAL(triggered()), this, SLOT(settingsWindowSlot()));
+    QMenu *menu = new QMenu("Fremantle", this);
+    menu->addAction(settingsAction);
+    menuBar()->addMenu(menu);
+    commitSettings("X", "Y", "Z");
 }
 
 MainWindow::~MainWindow()
@@ -119,4 +127,39 @@ if(value < 16) {
 
         QString valueString = "<body bgcolor=\"#" + R + G + B + "\">";
         ui->textEdit->setHtml(valueString);
+}
+
+void MainWindow::settingsWindowSlot()
+{
+
+        SettingsDialog *sd = new SettingsDialog(this);
+        sd->show();
+
+}
+
+void MainWindow::commitSettings(const QString &Raxis,
+                    const QString &Gaxis,
+                    const QString &Baxis)
+{
+
+        if (Raxis == "X")
+                this->Raxis = X;
+        else if (Raxis == "Y")
+                this->Raxis = Y;
+        else if (Raxis == "Z")
+                this->Raxis = Z;
+
+        if (Gaxis == "X")
+                this->Gaxis = X;
+        else if (Gaxis == "Y")
+                this->Gaxis = Y;
+        else if (Gaxis == "Z")
+                this->Gaxis = Z;
+
+        if (Baxis == "X")
+                this->Baxis = X;
+        else if (Baxis == "Y")
+                this->Baxis = Y;
+        else if (Baxis == "Z")
+                this->Baxis = Z;
 }

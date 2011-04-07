@@ -1,3 +1,4 @@
+#include "mainwindow.h"
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
@@ -20,14 +21,9 @@ SettingsDialog::~SettingsDialog()
     delete ui;
 }
 
-void SettingsDialog::BlueChanged(QString const& s) {
 
-}
-
-void SettingsDialog::GreenChanged(QString const& s) {
-
-}
-
-void SettingsDialog::RedChanged(QString const& s) {
+void SettingsDialog::accepted()
+{
+        MainWindow *mw = (MainWindow *)this->parent();
 
 }

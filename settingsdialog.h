@@ -15,10 +15,7 @@ public:
     explicit SettingsDialog(QWidget *parent = 0);
     ~SettingsDialog();
 private slots:
-    void BlueChanged(QString const&);
-    void GreenChanged(QString const&);
-    void RedChanged(QString const&);
-
+        void accepted();
 private:
     Ui::SettingsDialog *ui;
 };
