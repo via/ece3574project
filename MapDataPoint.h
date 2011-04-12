@@ -16,12 +16,12 @@ class MapDataPoint : public QObject {
         double x = 0, double y = 0, double z = 0);
     
 
-    double getLat() { return mLatitude; };
-    double getLong() { return mLongitude; };
+    double getLat() const { return mLatitude; };
+    double getLong() const { return mLongitude; };
 
-    double getX() { return mAccelX; };
-    double getY() { return mAccelY; };
-    double getZ() { return mAccelZ; };
+    double getX() const { return mAccelX; };
+    double getY() const { return mAccelY; };
+    double getZ() const { return mAccelZ; };
 
 
     friend QDataStream & operator<<(QDataStream & out, const MapDataPoint &mdp);
