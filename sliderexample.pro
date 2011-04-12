@@ -13,8 +13,8 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # the following lines and add the respective components to the 
 # MOBILITY variable. 
 
-SOURCES += main.cpp mainwindow.cpp settingsdialog.cpp
-HEADERS += mainwindow.h settingsdialog.h
+SOURCES += main.cpp mainwindow.cpp settingsdialog.cpp MapDataPoint.cpp
+HEADERS += mainwindow.h settingsdialog.h MapDataPoint.h
 FORMS += mainwindow.ui settingsdialog.ui
 CONFIG += mobility
 MOBILITY += sensors
