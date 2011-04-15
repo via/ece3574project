@@ -2,7 +2,7 @@
 #define MAPDATAPOINT_H
 
 #include <QObject>
-#include <QDataStream>
+#include <QTextStream>
 
 class MapDataPoint : public QObject {
   Q_OBJECT
@@ -24,8 +24,8 @@ class MapDataPoint : public QObject {
     double getZ() const { return mAccelZ; };
 
 
-    friend QDataStream & operator<<(QDataStream & out, const MapDataPoint &mdp);
-    friend QDataStream & operator>>(QDataStream & in, MapDataPoint &mdp);
+    friend QTextStream & operator<<(QTextStream & out, const MapDataPoint &mdp);
+    friend QTextStream & operator>>(QTextStream & in, MapDataPoint &mdp);
 
 };
 

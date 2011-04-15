@@ -11,6 +11,12 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QAccelerometer>
+#include <QGeoPositionInfoSource>
+#include <QGeoPositionInfo>
+#include "DataPointList.h"
+
+QTM_USE_NAMESPACE
 
 namespace Ui {
     class MainWindow;
@@ -22,7 +28,8 @@ enum Axis {
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
+private:
 public:
     enum ScreenOrientation {
         ScreenOrientationLockPortrait,
@@ -47,16 +54,25 @@ private slots:
     void on_verticalSlider_3_valueChanged(int value);
 
     void settingsWindowSlot();
+    void newAccelReading();
+    void posUpdate(const QGeoPositionInfo &);
+    void openTrace();
+    void closeTrace();
+    void resetTrace();
 
 private:
     Ui::MainWindow *ui;
-        QString R;
-        QString G;
-        QString B;
+        qreal x;
+        qreal y;
+        qreal z;
 
         Axis Raxis;
         Axis Gaxis;
         Axis Baxis;
+
+        DataPointList *list;
+        QAccelerometer *accel;
+        QGeoPositionInfoSource *pos;
 };
 
 #endif // MAINWINDOW_H

@@ -30,3 +30,5 @@ void DataPointList::append(const MapDataPoint *& mdp) {
   QLinkedList::append(mdp);
 
 }
+
+

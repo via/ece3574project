@@ -14,20 +14,46 @@
 #include <QtCore>
 #include <QtGui>
 #include <QAccelerometer>
+#include <QGeoPositionInfoSource>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    R = "00";
-    G = "00";
-    B = "00";
+    x = 0;
+    y = 0;
+    z = 0;
     QAction *settingsAction = new QAction("Settings", this);
-        connect(settingsAction, SIGNAL(triggered()), this, SLOT(settingsWindowSlot()));
+    QAction *openAction = new QAction("Open Trace", this);
+    QAction *saveAction = new QAction("Save Trace", this);
+    QAction *resetAction = new QAction("Reset Trace", this);
+    connect(settingsAction, SIGNAL(triggered()), this, SLOT(settingsWindowSlot()));
+    connect(openAction, SIGNAL(triggered()), this, SLOT(openTrace()));
+    connect(saveAction, SIGNAL(triggered()), this, SLOT(closeTrace()));
+    connect(resetAction, SIGNAL(triggered()), this, SLOT(resetTrace()));
     QMenu *menu = new QMenu("Fremantle", this);
     menu->addAction(settingsAction);
+    menu->addAction(openAction);
+    menu->addAction(saveAction);
+    menu->addAction(resetAction);
     menuBar()->addMenu(menu);
     commitSettings("X", "Y", "Z");
+    list = new DataPointList(1, 1);
+    const MapDataPoint *mdp = new MapDataPoint(this, 3, 3, 15, 0, 0);
+    list->append(mdp);
+    mdp = new MapDataPoint(this, 3.02, 3.03, 0, 15, 0);
+    list->append(mdp);
+    ui->tracer->setList(list);
+    accel = new QAccelerometer();
+    pos = QGeoPositionInfoSource::createDefaultSource(parent);
+    connect(accel, SIGNAL(readingChanged()), this, SLOT(newAccelReading()));
+    if (pos) {
+      connect(pos, SIGNAL(positionUpdated(QGeoPositionInfo)), this,
+            SLOT(posUpdate(QGeoPositionInfo)));
+      pos->startUpdates();
+    }
+    accel->start();
 }
 
 MainWindow::~MainWindow()
@@ -91,42 +117,18 @@ void MainWindow::showExpanded()
 
 void MainWindow::on_verticalSlider_2_valueChanged(int value)
 {
-   if(value < 16) {
-        R = "0" + R.setNum(value, 16);
-        }
-        else {
-        R = R.setNum(value,16);
-        }
 
-        QString valueString = "<body bgcolor=\"#" + R + G + B + "\">";
-        ui->textEdit->setHtml(valueString);
 }
 
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
-if(value < 16) {
-        B = "0" + B.setNum(value, 16);
-        }
-        else {
-        B = B.setNum(value,16);
-        }
 
-        QString valueString = "<body bgcolor=\"#" + R + G + B + "\">";
-        ui->textEdit->setHtml(valueString);
 
 }
 
 void MainWindow::on_verticalSlider_3_valueChanged(int value)
 {
-if(value < 16) {
-        G = "0" + G.setNum(value, 16);
-        }
-        else {
-        G = G.setNum(value,16);
-        }
 
-        QString valueString = "<body bgcolor=\"#" + R + G + B + "\">";
-        ui->textEdit->setHtml(valueString);
 }
 
 void MainWindow::settingsWindowSlot()
@@ -162,4 +164,89 @@ void MainWindow::commitSettings(const QString &Raxis,
                 this->Baxis = Y;
         else if (Baxis == "Z")
                 this->Baxis = Z;
+
+        ui->tracer->setR(this->Raxis);
+        ui->tracer->setG(this->Gaxis);
+        ui->tracer->setB(this->Baxis);
+        ui->tracer->update();
+}
+
+void MainWindow::newAccelReading() {
+
+  QAccelerometerReading *reading = accel->reading();
+  x = reading->x();
+  y = reading->y();
+  z = reading->z();
+  int red = ( Raxis == X ? x :
+      ( Raxis == Y ? y : z)) * 5 + 127;
+  int green = ( Gaxis == X ? x :
+      ( Gaxis == Y ? y : z)) * 5 + 127;
+  int blue = ( Baxis == X ? x :
+      ( Baxis == Y ? y : z)) * 5 + 127;
+
+  ui->verticalSlider_2->setSliderPosition(red);
+  ui->verticalSlider_3->setSliderPosition(green);
+  ui->verticalSlider->setSliderPosition(blue);
+
+
+
+}
+
+void MainWindow::posUpdate(const QGeoPositionInfo & update) {
+  const MapDataPoint *mdp = new MapDataPoint(0, update.coordinate().latitude(),
+      update.coordinate().longitude(), x, y, z);
+
+  list->append(mdp);
+
+}
+
+void MainWindow::openTrace() {
+
+  QString filename = QFileDialog::getOpenFileName();
+  QFile file(filename);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    return;
+  }
+
+  QTextStream instream(&file);
+
+  while (!instream.atEnd()) {
+    MapDataPoint *mdp = new MapDataPoint();
+    instream >> *mdp;
+    if (instream.atEnd()) break;
+    const MapDataPoint *mdp_c = mdp;
+    list->append(mdp_c);
+
+  }
+  file.close();
+
+  ui->tracer->update();
+
+}
+
+void MainWindow::closeTrace() {
+
+  QString filename = QFileDialog::getSaveFileName();
+  QFile file(filename);
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    return;
+  }
+
+  QTextStream outstream(&file);
+
+  DataPointList::const_iterator iter;
+  for (iter = list->constBegin(); iter != list->constEnd(); ++iter) {
+    outstream << **iter << endl;
+  }
+
+  file.close();
+  
+
+}
+
+void MainWindow::resetTrace() {
+
+  list->clear();
+  ui->tracer->update();
+
 }

@@ -22,8 +22,10 @@ SettingsDialog::~SettingsDialog()
 }
 
 
-void SettingsDialog::accepted()
+void SettingsDialog::accept()
 {
         MainWindow *mw = (MainWindow *)this->parent();
+        mw->commitSettings(ui->Raxisbox->currentText(), ui->Gaxisbox->currentText(),
+            ui->Baxisbox->currentText());
 
 }

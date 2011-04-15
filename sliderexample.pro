@@ -14,11 +14,12 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # MOBILITY variable. 
 
 SOURCES += main.cpp mainwindow.cpp settingsdialog.cpp MapDataPoint.cpp \
-DataPointList.cpp
-HEADERS += mainwindow.h settingsdialog.h MapDataPoint.h DataPointList.h
+DataPointList.cpp tracewidget.cpp
+HEADERS += mainwindow.h settingsdialog.h MapDataPoint.h DataPointList.h \
+tracewidget.h
 FORMS += mainwindow.ui settingsdialog.ui
 CONFIG += mobility
-MOBILITY += sensors
+MOBILITY += sensors location
 INCLUDEPATH += /usr/include/QtSensors/
 
 # Please do not modify the following two lines. Required for deployment.

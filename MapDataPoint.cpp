@@ -15,7 +15,7 @@ MapDataPoint::MapDataPoint(QObject *parent, double lat, double lon,
 }
 
 
-QDataStream& operator<<(QDataStream& out, const MapDataPoint &mdp) {
+QTextStream& operator<<(QTextStream& out, const MapDataPoint &mdp) {
 
   out << mdp.mLatitude << " " << mdp.mLongitude << " " << mdp.mAccelX << " ";
   out << mdp.mAccelY << " " << mdp.mAccelZ;
@@ -23,7 +23,7 @@ QDataStream& operator<<(QDataStream& out, const MapDataPoint &mdp) {
   return out;
 }
 
-QDataStream& operator>>(QDataStream &in, MapDataPoint &mdp) {
+QTextStream& operator>>(QTextStream &in, MapDataPoint &mdp) {
 
   in >> mdp.mLatitude >> mdp.mLongitude >> mdp.mAccelX;
   in >> mdp.mAccelY >> mdp.mAccelZ;
