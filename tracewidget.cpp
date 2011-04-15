@@ -35,7 +35,7 @@ void TraceWidget::paintEvent(QPaintEvent *ev) {
     painter.setPen(QColor::fromRgb(red, green, blue));
     painter.setBrush(QColor::fromRgb(red, green, blue));
     painter.drawEllipse((*iter)->getLong() * 10000, (*iter)->getLat() * 10000,
-        150, 150);
+        2, 2);
 
   }
 

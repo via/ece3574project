@@ -40,10 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar()->addMenu(menu);
     commitSettings("X", "Y", "Z");
     list = new DataPointList(1, 1);
-    const MapDataPoint *mdp = new MapDataPoint(this, 3, 3, 15, 0, 0);
-    list->append(mdp);
-    mdp = new MapDataPoint(this, 3.02, 3.03, 0, 15, 0);
-    list->append(mdp);
     ui->tracer->setList(list);
     accel = new QAccelerometer();
     pos = QGeoPositionInfoSource::createDefaultSource(parent);
