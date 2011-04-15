@@ -20,9 +20,9 @@ void TraceWidget::paintEvent(QPaintEvent *ev) {
   if (list == NULL)
     return;
 
-  painter.setWindow(list->getLonMin() * 10000, list->getLatMin() * 10000, 
-      (list->getLonMax() - list->getLonMin()) * 10000,
-      (list->getLatMax() - list->getLatMin()) * 10000);
+  painter.setWindow(list->getLonMin() * 10000000, list->getLatMin() * 10000000,
+      (list->getLonMax() - list->getLonMin()) * 10000000,
+      (list->getLatMax() - list->getLatMin()) * 10000000);
 
   DataPointList::const_iterator iter;
   for (iter = list->constBegin(); iter != list->constEnd(); ++iter) {
@@ -34,9 +34,8 @@ void TraceWidget::paintEvent(QPaintEvent *ev) {
         ( B == Y ? (*iter)->getY() : (*iter)->getZ())) * 5 + 127;
     painter.setPen(QColor::fromRgb(red, green, blue));
     painter.setBrush(QColor::fromRgb(red, green, blue));
-    painter.drawEllipse((*iter)->getLong() * 10000, (*iter)->getLat() * 10000,
-        2, 2);
-
+    painter.drawEllipse((*iter)->getLong() * 10000000, (*iter)->getLat() * 10000000,
+        300, 300);
   }
 
 }

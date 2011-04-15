@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     menu->addAction(resetAction);
     menuBar()->addMenu(menu);
     commitSettings("X", "Y", "Z");
-    list = new DataPointList(1, 1);
+    list = new DataPointList(0.0001, 0.0001);
     ui->tracer->setList(list);
     accel = new QAccelerometer();
     pos = QGeoPositionInfoSource::createDefaultSource(parent);
@@ -159,11 +159,11 @@ void MainWindow::newAccelReading() {
   y = reading->y();
   z = reading->z();
   int red = ( Raxis == X ? x :
-      ( Raxis == Y ? y : z)) * 5 + 127;
+      ( Raxis == Y ? y : z)) * 15 + 127;
   int green = ( Gaxis == X ? x :
-      ( Gaxis == Y ? y : z)) * 5 + 127;
+      ( Gaxis == Y ? y : z)) * 15 + 127;
   int blue = ( Baxis == X ? x :
-      ( Baxis == Y ? y : z)) * 5 + 127;
+      ( Baxis == Y ? y : z)) * 15 + 127;
 
   ui->verticalSlider_2->setSliderPosition(red);
   ui->verticalSlider_3->setSliderPosition(green);
