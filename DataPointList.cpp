@@ -27,7 +27,7 @@ void DataPointList::append(const MapDataPoint *& mdp) {
       mLonStop = mdp->getLong() + mLonMin;
   }
 
-  QLinkedList::append(mdp);
+  QLinkedList<const MapDataPoint *>::append(mdp);
 
 }
 
