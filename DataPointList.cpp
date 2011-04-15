@@ -17,17 +17,17 @@ void DataPointList::append(const MapDataPoint *& mdp) {
     mLonStart = mdp->getLong() - mLonMin / 2;
     mLonStop = mdp->getLong() + mLonMin / 2;
   } else {
-    if (mdp->getLat() > mLatStart - mLatMin)
-      mLatStart = mdp->getLat() - mLatMin;
-    if (mdp->getLat() < mLatStop + mLatMin)
+    if (mdp->getLat() > mLatStop - mLatMin)
       mLatStop = mdp->getLat() + mLatMin;
-    if (mdp->getLong() > mLonStart - mLonMin)
-      mLonStart = mdp->getLong() - mLonMin;
-    if (mdp->getLong() < mLonStop + mLonMin)
+    if (mdp->getLat() < mLatStart + mLatMin)
+      mLatStart = mdp->getLat() - mLatMin;
+    if (mdp->getLong() > mLonStop - mLonMin)
       mLonStop = mdp->getLong() + mLonMin;
+    if (mdp->getLong() < mLonStart + mLonMin)
+      mLonStart = mdp->getLong() - mLonMin;
   }
 
-  QLinkedList::append(mdp);
+  QLinkedList<const MapDataPoint *>::append(mdp);
 
 }
 
