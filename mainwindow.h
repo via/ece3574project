@@ -42,23 +42,24 @@ public:
 
     void setOrientation(ScreenOrientation orientation);
     void showExpanded();
+    void paintEvent(QPaintEvent *ev);
     void commitSettings(const QString &Raxis,
                         const QString &Gaxis,
                         const QString &Baxis);
 
 private slots:
-    void on_verticalSlider_2_valueChanged(int value);
-
-    void on_verticalSlider_valueChanged(int value);
-
-    void on_verticalSlider_3_valueChanged(int value);
-
     void settingsWindowSlot();
     void newAccelReading();
     void posUpdate(const QGeoPositionInfo &);
     void openTrace();
     void closeTrace();
     void resetTrace();
+
+    void on_verticalSlider_2_valueChanged(int value);
+
+    void on_verticalSlider_3_valueChanged(int value);
+
+    void on_verticalSlider_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

@@ -115,21 +115,6 @@ void MainWindow::showExpanded()
 #endif
 }
 
-void MainWindow::on_verticalSlider_2_valueChanged(int value)
-{
-
-}
-
-void MainWindow::on_verticalSlider_valueChanged(int value)
-{
-
-
-}
-
-void MainWindow::on_verticalSlider_3_valueChanged(int value)
-{
-
-}
 
 void MainWindow::settingsWindowSlot()
 {
@@ -249,4 +234,29 @@ void MainWindow::resetTrace() {
   list->clear();
   ui->tracer->update();
 
+}
+
+void MainWindow::paintEvent(QPaintEvent *ev) {
+
+  QPainter painter(this);
+  painter.fillRect(painter.viewport(), QColor::fromRgb(
+        ui->verticalSlider_2->value(),
+        ui->verticalSlider_3->value(),
+        ui->verticalSlider->value()));
+  
+}
+
+void MainWindow::on_verticalSlider_2_valueChanged(int value)
+{
+    update();
+}
+
+void MainWindow::on_verticalSlider_3_valueChanged(int value)
+{
+    update();
+}
+
+void MainWindow::on_verticalSlider_valueChanged(int value)
+{
+    update();
 }
