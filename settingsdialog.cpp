@@ -28,4 +28,5 @@ void SettingsDialog::accept()
         mw->commitSettings(ui->Raxisbox->currentText(), ui->Gaxisbox->currentText(),
             ui->Baxisbox->currentText());
 
+        QDialog::done(0);
 }
